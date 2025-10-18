@@ -1,29 +1,36 @@
-import type React from "react"
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 
-const _geist = Geist({ subsets: ["latin"] })
-const _geistMono = Geist_Mono({ subsets: ["latin"] })
+const geist = Geist({
+  subsets: ["latin"],
+  variable: '--font-geist-sans',
+})
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: '--font-geist-mono',
+})
 
 export const metadata: Metadata = {
-  title: "QR Restaurant - Order at Your Table",
-  description: "Scan, browse, order, and pay - all from your phone",
-  generator: "v0.app",
-  manifest: "/manifest.json",
-  themeColor: "#FF6B35",
-  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
+  title: "QR Restaurant System",
+  description: "Modern QR code ordering system for restaurants",
+}
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 }
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
+}) {
   return (
-    <html lang="en">
-      <body className={`font-sans antialiased`}>
+    <html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
+      <body className="bg-background text-foreground font-sans antialiased">
         {children}
         <Analytics />
       </body>
