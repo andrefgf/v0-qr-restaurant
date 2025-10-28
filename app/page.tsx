@@ -1,5 +1,5 @@
 // app/page.tsx
-'use client';
+'use client'; // Add this at the top
 
 import { useState } from 'react';
 import Link from 'next/link';
@@ -17,11 +17,14 @@ export default function HomePage() {
   ];
 
   const tableUrl = (tableNumber: string) => {
+    if (typeof window === 'undefined') return ''; // Handle server-side
     return `${window.location.origin}/table/${tableNumber}`;
   };
 
   const downloadQRCode = (tableNumber: string) => {
     const url = tableUrl(tableNumber);
+    if (!url) return; // Don't proceed if we don't have the URL
+    
     const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(url)}`;
     
     const link = document.createElement('a');
